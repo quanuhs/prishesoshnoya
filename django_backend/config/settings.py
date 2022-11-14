@@ -45,7 +45,10 @@ INSTALLED_APPS = [
 
     'django_celery_beat',
     'corsheaders',
-    'import_export'
+    'import_export',
+
+
+    'telegramBot.apps.TelegrambotConfig'
 ]
 
 MIDDLEWARE = [
