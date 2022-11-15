@@ -10,7 +10,8 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('', RedirectView.as_view(url='admin/')),
     path('admin/', admin.site.urls),
-    path('telegram/<secret_key>', telegram_view.handle_telegram)
+    path('telegram/<secret_key>', telegram_view.handle_telegram),
+    path('robokassa/result/', telegram_view.robokassa_result)
 ]
 
 
