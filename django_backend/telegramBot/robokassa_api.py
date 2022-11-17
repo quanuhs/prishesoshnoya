@@ -55,7 +55,7 @@ def result_payment(request):
 
     bot_settings = BotSettings.objects.filter().first()
 
-    new_signature = calculate_signature(cost, number, bot_settings.password_shop)
+    new_signature = calculate_signature(cost, number, bot_settings.password_shop_2)
 
     if signature.lower() == new_signature.lower():
         payment = Payment.objects.filter(invoice_number=int(number)).first()
@@ -96,15 +96,15 @@ def recurring_payment(user_pk):
         bot_settings.id_shop,
         user.subscription.price,
         invoice_number,
-        bot_settings.password_shop
+        bot_settings.password_shop_1
     )
 
     payload = {'MerchantLogin': f'{bot_settings.id_shop}',
                'InvoiceID': f'{invoice_number}',
                'PreviousInvoiceID': f'{user.previous_invoice_id}',
-               'Description': f'{payment.subscription.description}',
+               'Description': f'{user.subscription.description}',
                'SignatureValue': f'{signature}',
-               'OutSum': f'{payment.subscription.price}'}
+               'OutSum': f'{user.subscription.price}'}
     files = []
     headers = {}
 

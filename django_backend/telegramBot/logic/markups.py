@@ -19,7 +19,7 @@ class Markups:
         keyboard.add(
             types.InlineKeyboardButton(self._dict.btn_process, callback_data='about'),
             types.InlineKeyboardButton(self._dict.btn_bunt, callback_data='main_bunt'),
-            types.InlineKeyboardButton(self._dict.btn_prichess, callback_data='main_prich')
+            #types.InlineKeyboardButton(self._dict.btn_prichess, callback_data='main_prich')
             )
 
         return keyboard
