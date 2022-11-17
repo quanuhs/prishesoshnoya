@@ -43,7 +43,7 @@ class Markups:
         btn_sub_or_unsub = types.InlineKeyboardButton(self._dict.btn_subscribe, callback_data='subscribe')
 
         if user is not None:
-            if user.subscription is not None:
+            if user.subscription is not None and user.auto_payment:
                 btn_sub_or_unsub = types.InlineKeyboardButton(self._dict.btn_subscribe, callback_data='unsubscribe')
 
 

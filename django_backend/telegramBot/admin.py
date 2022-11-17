@@ -3,7 +3,6 @@ from .models import BotSettings, BotDictionary, TelegramUser, Subscription, Paym
 
 
 admin.site.register(TelegramUser)
-admin.site.register(Subscription)
 admin.site.register(Payment)
 admin.site.register(RobokassaLogs)
 
@@ -16,11 +15,19 @@ class BotSettingsAdmin(admin.ModelAdmin):
 class BotDictionaryAdmin(admin.ModelAdmin):
     pass
 
-# class BotButtonsInline(admin.TabularInline):
-#     fk_name = 'origin_menu'
-#     extra = 0
-#     model = BotButton
+class BotUsersInline(admin.TabularInline):
+    extra = 0
+    model = TelegramUser
 
+    def has_add_permission(self, *args, **kwargs) -> bool:
+        return False
+
+    def has_change_permission(self, *args, **kwargs) -> bool:
+        return False
+    
+@admin.register(Subscription)
+class SubscriptionAdmin(admin.ModelAdmin):
+    inlines = [BotUsersInline]
 
 # @admin.register(BotMenu)
 # class BotMenuAdmin(admin.ModelAdmin):

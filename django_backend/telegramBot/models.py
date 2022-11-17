@@ -54,12 +54,15 @@ class BotDictionary(models.Model):
 
     text_price = models.TextField(verbose_name="Текст - цена вопроса")
     btn_subscribe = models.CharField(max_length=125, verbose_name="Кнопка - подписаться")
+    btn_unsubscribe = models.CharField(max_length=125, verbose_name="Кнопка - отписаться")
+
     btn_offerta = models.CharField(max_length=125, verbose_name="Кнопка - договор оферты")
     btn_policy = models.CharField(max_length=125, verbose_name="Кнопка - политика о персональных данных")
      
     text_pay = models.TextField(verbose_name="Текст - оплата")
     btn_pay = models.CharField(max_length=125, verbose_name="Кнопка - оплатить")
 
+    text_unsubscribe = models.TextField(verbose_name="Текст - отмена подписки", default="Отписаться")
     text_after_pay = models.TextField(verbose_name="Текст - после оплаты")
     text_bunt = models.TextField(verbose_name="Текст - про БУНТ")
     
@@ -84,9 +87,11 @@ class Subscription(models.Model):
     # Название
     name = models.CharField(max_length=125, verbose_name='Название')
     # Цена
-    price = models.FloatField(default=0, verbose_name='Цена')
+    price = models.DecimalField(max_digits=15, decimal_places=2, verbose_name='Цена')
+
     # Активность
     active = models.BooleanField(default=True, verbose_name='Активно')
+
     # Описание при оплате
     description = models.TextField(default='Описание', verbose_name='Описание при оплате')
 
@@ -106,7 +111,7 @@ class RobokassaLogs(models.Model):
 # Пользователи
 class TelegramUser(models.Model):
     # id
-    user_id = models.TextField(verbose_name='id пользователя')
+    user_id = models.CharField(max_length=125, verbose_name='id пользователя')
     
     # Текущая подписка
     subscription = models.ForeignKey(Subscription, on_delete=models.RESTRICT, default=None, blank=True, null=True)

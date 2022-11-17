@@ -42,7 +42,7 @@ def menu_callback(call):
     
     markups = Markups()
     delete_message = True
-    
+
     # Главное меню
     if call.data == "about":
         bot.send_message(call.from_user.id, markups.texts.text_about, reply_markup=markups.about_menu(bot.settings.contact_us), parse_mode='Markdown')
@@ -67,14 +67,17 @@ def menu_callback(call):
     elif call.data == "main_menu":
         bot.send_message(call.from_user.id, markups.texts.text_start, reply_markup=markups.main_menu, parse_mode='Markdown')
     
-    
     # Меню подписки
     elif call.data == "subscribe":
-        user = TelegramUser.objects.get_or_create(
-            user_id = call.data.from_user.id
+        user, _ = TelegramUser.objects.get_or_create(
+            user_id = call.from_user.id
         )
         
-        bot.send_message(call.from_user.id, markups.texts.text_pay, reply_markup=markups.pay_menu("google.com"), parse_mode="html")
+        bot.send_message(call.from_user.id, markups.texts.text_pay, reply_markup=markups.pay_menu("google.com"), parse_mode="Markdown")
+
+
+    elif call.data == "unsubscribe":
+        bot.send_message(call.from_user.id, markups.texts.text_pay, reply_markup=markups.pay_menu("yandex.ru"), parse_mode="Markdown")
     
     elif call.data == "offerta":
         bot.send_document(call.from_user.id, bot.settings.offerta)
@@ -88,7 +91,7 @@ def menu_callback(call):
     
     # Меню оплаты
     elif call.data == "pay":
-        bot.send_message(call.from_user.id, markups.texts.text_after_pay, parse_mode='html')
+        bot.send_message(call.from_user.id, markups.texts.text_after_pay, parse_mode='Markdown')
 
     if not delete_message:
         return
