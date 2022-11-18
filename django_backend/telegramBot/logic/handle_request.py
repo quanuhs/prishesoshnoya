@@ -18,11 +18,16 @@ class TelegramBot(telebot.TeleBot):
 
 bot: TelegramBot = TelegramBot(None)
 
-def handle(request, _settings):
+def handle_webhook(request, _settings):
     bot.set_token(_settings.token)
     bot.set_settings(_settings)
     bot.process_new_updates([telebot.types.Update.de_json(request.body.decode("utf-8"))])
 
+
+def handle_longpoll(_settings):
+    bot.set_token(_settings.token)
+    bot.set_settings(_settings)
+    bot.infinity_polling()
 
 def get_user_id(message):
     return message.from_user.id

@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from telegramBot.models import BotSettings, RobokassaLogs
 from telegramBot.robokassa_api import result_payment
-from .logic.handle_request import handle
+from .logic.handle_request import handle_webhook
 
 
 
@@ -18,7 +18,7 @@ def handle_telegram(request, secret_key):
     if settings is None:
         return HttpResponse("API key is invalid!", content_type="text/plain", status=403)
 
-    handle(request, settings)
+    handle_webhook(request, settings)
 
     return HttpResponse('OK', content_type="text/plain", status=200)
 
