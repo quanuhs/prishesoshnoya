@@ -7,13 +7,22 @@ from telegramBot.logic.markups import Markups
 
 
 class TelegramBot(telebot.TeleBot):
-    settings = None
+    _settings = None
     
     def set_token(self, new_token):
         self.token = new_token
     
     def set_settings(self, settings):
-        self.settings = settings
+        self._settings = settings
+
+    @property
+    def settings(self):
+        if self._settings is not None:
+            self._settings.refresh_from_db()
+        
+        return self._settings
+
+
 
 
 bot: TelegramBot = TelegramBot(None)

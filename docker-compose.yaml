@@ -19,7 +19,6 @@ services:
       sh -c "python manage.py collectstatic --noinput &&
       python manage.py makemigrations --noinput &&
       python manage.py migrate --noinput &&
-      python manage.py telegram &&
       gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers=4"
 
     volumes:
@@ -32,6 +31,19 @@ services:
       - ./.env
     depends_on:
       - database
+    restart: always
+    
+  telegram:
+    container_name: telegram
+    build: ./django_backend
+    command: python manage.py telegram
+    volumes:
+      - media-volume:/home/app/backend/media
+    env_file:
+      - ./.env
+    depends_on:
+      - database
+      - backend
     restart: always
 
   server:
