@@ -8,6 +8,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
          settings = BotSettings.objects.first()
          print("Longpoll bot is up")
+         
+
          if settings is not None:
             handle_longpoll(settings)
+
          print("Longpoll bot is down")
